@@ -39,6 +39,9 @@ import java.util.NoSuchElementException;
 import com.arjuna.ats.arjuna.coordinator.BasicAction;
 import com.arjuna.ats.arjuna.utils.ThreadUtil;
 
+import io.smallrye.context.storage.ThreadLocalStorage;
+import io.smallrye.context.storage.spi.StorageManager;
+
 /**
  * This class maintains a mapping between a thread and its notion of the current
  * transaction. Essentially this is a stack of transactions.
@@ -292,7 +295,7 @@ public class ThreadActionData
 		}
 	}
 
-	private static ThreadLocal<Deque<BasicAction>> _threadList = new ThreadLocal<Deque<BasicAction>>();
+	private static ThreadLocal<Deque<BasicAction>> _threadList = StorageManager.threadLocal(ThreadActionDataStorageDeclaration.class);
 
 	private static ArrayList<ThreadSetup> _threadSetups = new ArrayList<ThreadSetup>();
 
